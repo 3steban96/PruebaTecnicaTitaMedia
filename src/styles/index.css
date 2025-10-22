@@ -11,6 +11,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; 
+}
+
+.spinner-image {
+  width: 70px;
+  height: 70px;
+  animation: spin 1s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(220, 10, 45, 0.6));
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 
 .card:hover {
@@ -32,6 +54,7 @@
   color: #888;
   font-weight: 600;
 }
+
 .card-type-container{
   flex-grow: 1;
   display: flex;
@@ -65,7 +88,6 @@
   font-weight: 600;
 }
 
-/* Search bar styles */
 .search-bar {
   display: flex;
   flex-direction: row;
@@ -77,26 +99,30 @@
   padding: 0 12px;
   box-sizing: border-box;
 }
+
 .search-input-wrapper {
   flex: 1;
 }
+
 .search-button-wrapper {
   width: 36px;
   flex: 0 0 36px;
 }
 
-/* Pokemon list grid (responsive) */
 .pokemon-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
   background-color: #f2f2f2;
   border-radius: 10px;
   padding: 10px;
+  margin: 10px;
   box-sizing: border-box;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Card adjustments to be fluid */
 .card {
   display: flex;
   flex-direction: column;
@@ -105,9 +131,7 @@
   border-radius: 12px;
   background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
   width: 100%;
-  max-width: 160px; /* allows card to grow on larger viewports */
-  min-height: 150px;
-  margin: 3px;
+  min-height: 160px;
   padding-top: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -115,62 +139,105 @@
   position: relative;
 }
 
-/* tune internals */
 .card-image {
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
-  margin-top: 12px;
+  margin-top: 10px;
   margin-bottom: auto;
 }
 
-/* Responsive breakpoints */
-@media (min-width: 600px) {
+@media (min-width: 480px) {
   .pokemon-list {
-    grid-template-columns: repeat(auto-fill, minmax(409px, 1fr));
-    gap: 1px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     padding: 14px;
   }
+  
   .card {
-    max-width: 180px;
-    min-height: 170px;
+    min-height: 190px;
   }
+  
   .card-image {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (min-width: 768px) {
+  .pokemon-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .card {
+    min-height: 200px;
+  }
+  
+  .card-image {
+    width: 110px;
+    height: 110px;
   }
 }
 
 @media (min-width: 1024px) {
   .pokemon-list {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-    padding: 18px;
-    margin: 18px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
   }
+  
   .card {
-    max-width: 200px;
-    min-height: 190px;
+    min-height: 220px;
   }
+  
   .card-image {
     width: 120px;
     height: 120px;
     margin-top: 20px;
   }
+  
+  .card-footer {
+    height: 75px;
+  }
 }
 
-/* small screen tweaks */
-@media (max-width: 420px) {
+@media (min-width: 1440px) {
+  .pokemon-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 380px) {
   .search-bar {
     padding: 0 8px;
     gap: 8px;
   }
+  
   .pokemon-list {
-    padding: 8px;
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 6px;
+    gap: 6px;
     margin: 8px;
   }
+  
   .card {
     min-height: 140px;
+  }
+  
+  .card-image {
+    width: 80px;
+    height:80px;
+  }
+  
+  .card-footer {
+    height: 60px;
+  }
+  
+  .card p {
+    font-size: 0.8rem;
   }
 }

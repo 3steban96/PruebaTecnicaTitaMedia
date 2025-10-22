@@ -3,22 +3,22 @@ import Image from '../atoms/Image';
 import Text from '../atoms/Text';
 import '../../styles/index.css';
 
-export default function Card() {
+export default function Card({img, name, number}) {
   return (
     <div className="card">
       <div className="card-header">
-        <Text content="#004" className="card-number" />
+        <Text content={number} className="card-number" />
       </div>
       <div className="card-type-container">
         <Image
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
+          src={img}
           alt="Charmander"
           className="card-image"
         />
       </div>
 
       <div className="card-footer">
-        <Text content="Charmander" />
+        <Text content={name} />
       </div>
     </div>
   );
