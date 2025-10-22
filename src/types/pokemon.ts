@@ -1,0 +1,16 @@
+export interface Pokemontype {
+    id: number;
+    name: string;
+    height: number;
+    weight: number;
+    imgUrl: string;
+    stats:{
+        hp: number;
+        attack: number;
+        defense: number;
+        special_attack: number;
+        special_defense: number;
+        speed: number;
+    }
+    moves: string[];
+}
