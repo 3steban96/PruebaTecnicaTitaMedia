@@ -2,6 +2,10 @@
 
 Pequeña aplicación React + Apollo GraphQL que muestra Pokémons usando la API pública de GraphQL de PokeAPI. Incluye paginado, búsqueda, ordenamiento y favoritos persistentes en localStorage.
 
+## Demo / Deploy
+La aplicación está desplegada y accesible en:
+https://prueba-tecnica-tita-media.vercel.app/
+
 ## Tecnologías
 - React 19 ([src/main.jsx](src/main.jsx))
 - Vite ([vite.config.js](vite.config.js))
