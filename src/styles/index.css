@@ -531,49 +531,56 @@ button:disabled {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-
 }
 
 .favorite-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10px;
-  height: 12px;
-  padding: 8px 16px;  
+  width: 60px;
+  height: 60px;
   border: none;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
-  font-weight: bold;  
+  border-radius: 50%;
+  background: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
 }
-.favorite-text{
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 6px;
+
+.favorite-button img {
+  width: 60px;
+  height: 60px;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
 }
+
 .favorite-button:hover {
-  background-color: #ff4726;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
 }
 
 .favorite-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9);
 }
 
 .favorite-button.active {
-  background-color: #dc143c;
+  animation: pulse 0.4s ease;
 }
 
-.favorite-icon {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
+
 
 @media (min-width: 480px) {
   .pokemon-list {
