@@ -3,7 +3,7 @@ import Image from '../atoms/Image'
 import NavBar from './NavBar'
 import iconPokedex from '../../assets/icon-pokedex.png'
 
-export default function Header() {
+export default function Header({ handleSortChange, handleSearchChange }) {
   return (  
     <div style={{padding: 16}}>
         <div >
@@ -17,7 +17,10 @@ export default function Header() {
             </div>
 
             <div style={{marginTop: 12}}>
-                <NavBar/>
+                <NavBar 
+                    onSortChange={handleSortChange}
+                    onSearchChange={handleSearchChange}
+                />
             </div>
         </div>
     </div>

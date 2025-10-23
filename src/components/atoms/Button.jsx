@@ -1,9 +1,11 @@
 import React from 'react'
+import '../../styles/index.css'
 
-export default function Button({text, handleAction}) {
+export default function Button({children, text, handleAction, className, onClick}) {
   return (
     <button 
-      onClick={handleAction}
+      onClick={handleAction || onClick}
+      className={className}
       style={{
         width: 36,
         height: 36,
@@ -19,7 +21,7 @@ export default function Button({text, handleAction}) {
         fontWeight: 600
       }}
     >
-      {text}
+      {children || text}
     </button>
   )
 }

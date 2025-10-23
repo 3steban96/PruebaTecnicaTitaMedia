@@ -15,3 +15,8 @@ export interface PokemonType {
     moves: string[];
     types: string[];
 }
+export interface FavoritePokemon {
+    id: number;
+    name: string;
+    imgUrl: string;
+}

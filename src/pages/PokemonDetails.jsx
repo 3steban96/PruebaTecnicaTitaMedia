@@ -8,17 +8,23 @@ import Image from '../components/atoms/Image'
 import Text from '../components/atoms/Text'
 import icon_height from '../assets/icon_ruler.png'
 import icon_weight from '../assets/icon_weight.png'
+import FavoriteButton from '../components/molecules/FavoriteButton'
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { addFavorite, removeFavorite } from '../features/favoritesSlice';
 
 export default function PokemonDetails() {
   const { id } = useParams(); 
-  const navigate = useNavigate();
-  console.log("ID del pokemon:", id);
-  
+  const navigate = useNavigate();  
   const {pokemon, loading, error} = usePokemonById(id);
-  console.log("Pokemon details data:", pokemon);
-  
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(state => state.favorites.list);
+
+  // Mover esta línea DESPUÉS de los checks de loading/error
   if(loading) return <Loading/>
   if(error) return <p>Error: {error.message}</p>
+  
+  // Ahora sí podemos usar pokemon.id de forma segura
+  const isFavorite = favorites.some(fav => fav.id === pokemon.id);
   
   // Función para obtener el color de fondo según el tipo principal
   const getTypeColor = (typeName) => {
@@ -38,8 +44,20 @@ export default function PokemonDetails() {
   const primaryType = pokemon.pokemon_v2_pokemontypes[0]?.pokemon_v2_type.name;
   const backgroundColor = getTypeColor(primaryType);
 
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFavorite(pokemon.id));
+    } else {
+      dispatch(addFavorite({
+        id: pokemon.id,
+        name: pokemon.name,
+        image: pokemon.pokemon_v2_pokemonsprites[0]?.sprites.front_default,
+      }));
+    }
+  };
+
   return (
-    <div style={{ backgroundColor }}>
+    <div className='page_pokemonDetails' style={{ backgroundColor }}>
       <div className="header-pokemon-details" style={{ backgroundColor }}>
         <div className="header-pokemon-details-content">
           <Image
@@ -146,6 +164,7 @@ export default function PokemonDetails() {
           <div className="pokemon-description">
             <Text
               content={pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesflavortexts[0].flavor_text.replace(/\f/g, ' ')}
+              className="pokemon-description-text"
             />
           </div>
         )}
@@ -192,6 +211,13 @@ export default function PokemonDetails() {
               </div>
             );
           })}
+        </div>
+        <div className="favorite-button-container">
+          <FavoriteButton 
+            className="favorite-button"            
+            isFavorite={isFavorite}
+            onClick={handleToggleFavorite}
+          />
         </div>
       </div>
     </div>
