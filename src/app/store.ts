@@ -7,7 +7,6 @@ const loadFavorites = () => {
     console.log('Loaded favorites from localStorage:', serializedState);
     if (serializedState) {
       const parsedData = JSON.parse(serializedState);
-      // Asegurar que tenga la estructura correcta
       return {
         favorites: {
           list: Array.isArray(parsedData) ? parsedData : (parsedData.list || [])
@@ -22,7 +21,6 @@ const loadFavorites = () => {
 
 const saveFavorites = (state: any) => {
   try {
-    // Guardar solo el array de favoritos para simplificar
     const favoritesToSave = state.favorites.list;
     console.log('Saving favorites to localStorage:', favoritesToSave);
     localStorage.setItem('pokemonFavorites', JSON.stringify(favoritesToSave));
@@ -38,7 +36,6 @@ export const store = configureStore({
   preloadedState: loadFavorites(),
 });
 
-// Suscribirse a cambios para guardar automáticamente
 store.subscribe(() => {
   saveFavorites(store.getState());
 });

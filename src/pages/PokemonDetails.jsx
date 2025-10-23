@@ -19,14 +19,11 @@ export default function PokemonDetails() {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(state => state.favorites.list);
 
-  // Mover esta línea DESPUÉS de los checks de loading/error
   if(loading) return <Loading/>
   if(error) return <p>Error: {error.message}</p>
   
-  // Ahora sí podemos usar pokemon.id de forma segura
   const isFavorite = favorites.some(fav => fav.id === pokemon.id);
   
-  // Función para obtener el color de fondo según el tipo principal
   const getTypeColor = (typeName) => {
     const colors = {
       grass: '#74CB48',

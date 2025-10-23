@@ -38,7 +38,6 @@ export const usePokemons = ({
 
     let pokemons = [...data.pokemon_v2_pokemon];
 
-    // Filtrar por término de búsqueda
     if (searchTerm) {
       pokemons = pokemons.filter(pokemon => 
         pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -46,7 +45,6 @@ export const usePokemons = ({
       );
     }
 
-    // Ordenar según la opción seleccionada
     switch (sortBy) {
       case 'name':
         pokemons.sort((a, b) => a.name.localeCompare(b.name));

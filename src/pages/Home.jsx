@@ -9,18 +9,18 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   
   const itemsPerPage = 9;
-  const totalItems = 1010; // Total de Pokémon (puedes ajustar este número)
+  const totalItems = 1010; 
 
   const handleSortChange = (newSort) => {
     setSortBy(newSort);
-    setCurrentPage(1); // Resetear a la primera página al cambiar el orden
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (term) => {
     const cleanedTerm = term.replace(/[^a-zA-Z0-9\s]/g, '');
     if (cleanedTerm.length >= 3 || cleanedTerm.length === 0) {
       setSearchTerm(cleanedTerm);
-      setCurrentPage(1); // Resetear a la primera página al buscar
+      setCurrentPage(1); 
     } else if (cleanedTerm.length > 0) {
       setSearchTerm('');
     }

@@ -11,7 +11,6 @@ export default function PokemonList({ sortBy, searchTerm, currentPage  }) {
   if (loading) return <LoadingMessage />;
   if (error) return <p>Error: {error.message}</p>;
   
-  // Filtrar por favoritos si sortBy es 'favorites'
   const filteredPokemons = sortBy === 'favorites' 
     ? pokemons.filter(pokemon => favorites.some(fav => fav.id === pokemon.id))
     : pokemons;
