@@ -6,7 +6,12 @@ import { useMemo } from 'react';
 import { useAppSelector } from "../app/hooks";
 
 interface PokemonsData {
-  pokemon_v2_pokemon: PokemonType[]; 
+  pokemon_v2_pokemon: PokemonType[];
+  pokemon_v2_pokemon_aggregate?: {
+    aggregate: {
+      count: number;
+    };
+  };
 }
 
 interface UsePokemonsParams {
@@ -23,55 +28,83 @@ export const usePokemons = ({
   itemsPerPage = 9
 }: UsePokemonsParams = {}) => {
   const offset = (page - 1) * itemsPerPage;
+  const favorites = useAppSelector(state => state.favorites.list);
   
+  // Construir las condiciones de búsqueda para GraphQL
+  const where = useMemo(() => {
+    if (!searchTerm) return {};
+    
+    // Si es un número, buscar por ID
+    if (!isNaN(Number(searchTerm))) {
+      return {
+        id: { _eq: parseInt(searchTerm) }
+      };
+    }
+    
+    // Si es texto, buscar por nombre
+    return {
+      name: { _ilike: `%${searchTerm}%` }
+    };
+  }, [searchTerm]);
+
+  // Construir el orden para GraphQL
+  const orderBy = useMemo(() => {
+    switch (sortBy) {
+      case 'name':
+        return [{ name: 'asc' }];
+      case 'number':
+      default:
+        return [{ id: 'asc' }];
+    }
+  }, [sortBy]);
+
   const { data, loading, error } = useQuery<PokemonsData>(GET_POKEMONS, {
     variables: { 
-      limit: itemsPerPage, 
-      offset: offset 
+      limit: sortBy === 'favorites' ? 1010 : itemsPerPage, // Cargar todos si es favoritos
+      offset: sortBy === 'favorites' ? 0 : offset,
+      where: where,
+      order_by: orderBy
     },
   });
 
-  const favorites = useAppSelector(state => state.favorites.list);
-
-  const filteredAndSortedPokemons = useMemo(() => {
+  const processedPokemons = useMemo(() => {
     if (!data?.pokemon_v2_pokemon) return [];
 
     let pokemons = [...data.pokemon_v2_pokemon];
 
-    if (searchTerm) {
+    // Si el orden es por favoritos, ordenar manualmente
+    if (sortBy === 'favorites') {
       pokemons = pokemons.filter(pokemon => 
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pokemon.id.toString().includes(searchTerm)
+        favorites.some(fav => fav.id === pokemon.id)
       );
-    }
-
-    switch (sortBy) {
-      case 'name':
-        pokemons.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'number':
-        pokemons.sort((a, b) => a.id - b.id);
-        break;
-      case 'favorites':
-        pokemons.sort((a, b) => {
-          const aIsFav = favorites.some(fav => fav.id === a.id);
-          const bIsFav = favorites.some(fav => fav.id === b.id);
-          if (aIsFav && !bIsFav) return -1;
-          if (!aIsFav && bIsFav) return 1;
-          return a.id - b.id;
-        });
-        break;
-      default:
-        pokemons.sort((a, b) => a.id - b.id);
+      pokemons.sort((a, b) => a.id - b.id);
+      
+      // Aplicar paginación manual para favoritos
+      const start = offset;
+      const end = start + itemsPerPage;
+      pokemons = pokemons.slice(start, end);
     }
 
     return pokemons;
-  }, [data, sortBy, searchTerm, favorites]);
+  }, [data, sortBy, favorites, offset, itemsPerPage]);
+
+  // Calcular el total de items para la paginación
+  const totalCount = useMemo(() => {
+    if (sortBy === 'favorites') {
+      return favorites.length;
+    }
+    // Si hay búsqueda activa, retornar la cantidad de resultados
+    if (searchTerm && data?.pokemon_v2_pokemon) {
+      return data.pokemon_v2_pokemon.length;
+    }
+    return 1010; // Total de Pokémon
+  }, [sortBy, searchTerm, favorites.length, data]);
 
   return {
-    pokemons: filteredAndSortedPokemons, 
+    pokemons: processedPokemons, 
     loading,
-    error
+    error,
+    totalCount
   };
 };
 

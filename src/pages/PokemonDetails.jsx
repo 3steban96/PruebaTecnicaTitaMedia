@@ -196,6 +196,7 @@ export default function PokemonDetails() {
                   className="pokemon-stat-value"
                   content={String(stat.base_stat).padStart(3, '0')}
                 />
+                
                 <div className="pokemon-stat-bar-container">
                   <div 
                     className="pokemon-stat-bar" 
@@ -205,7 +206,11 @@ export default function PokemonDetails() {
                     }}
                   ></div>
                 </div>
-              </div>
+                <Text
+                  className="pokemon-stat-value"
+                  content="255"
+                />              
+                </div>
             );
           })}
         </div>

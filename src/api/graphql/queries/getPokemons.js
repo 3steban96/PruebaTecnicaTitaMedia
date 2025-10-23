@@ -1,27 +1,28 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_POKEMONS = gql`
-  query getPokemons($limit: Int!, $offset: Int!) {
-    pokemon_v2_pokemon(limit: $limit, offset: $offset, order_by:{name: asc}) {
+  query GetPokemons(
+    $limit: Int!
+    $offset: Int!
+    $where: pokemon_v2_pokemon_bool_exp
+    $order_by: [pokemon_v2_pokemon_order_by!]
+  ) {
+    pokemon_v2_pokemon(
+      limit: $limit
+      offset: $offset
+      where: $where
+      order_by: $order_by
+    ) {
       id
       name
-      height
-      weight
       pokemon_v2_pokemonsprites {
         sprites
       }
-      pokemon_v2_pokemonstats {
-        base_stat
-        pokemon_v2_stat {
-          name
-        }
-      }
-      pokemon_v2_pokemonmoves {
-        pokemon_v2_move {
+      pokemon_v2_pokemontypes {
+        pokemon_v2_type {
           name
         }
       }
     }
   }
 `;
-
