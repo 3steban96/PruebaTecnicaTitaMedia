@@ -13,4 +13,5 @@ export interface PokemonType {
         speed: number;
     }
     moves: string[];
+    types: string[];
 }

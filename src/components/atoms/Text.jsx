@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Text({content, style}) {
+export default function Text({content, className}) {
   return (
     <div>
-      <p style={style}>{content}</p>
+      <p className={className}>{content}</p>
     </div>
   )
 }

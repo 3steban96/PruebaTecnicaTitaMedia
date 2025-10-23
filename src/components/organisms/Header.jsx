@@ -10,7 +10,7 @@ export default function Header() {
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12}}>
                 <Image 
                     src={iconPokedex}
-                    alt={"Ditto"}
+                    alt={"Pokédex Icon"}
                     style={{width: 40, height: 40}}
                 />
                 <h1 style={{margin: 0, fontSize: 20}}>Pokédex</h1>
