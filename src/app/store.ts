@@ -4,7 +4,6 @@ import favoritesReducer from '../features/favoritesSlice';
 const loadFavorites = () => {
   try {
     const serializedState = localStorage.getItem('pokemonFavorites');
-    console.log('Loaded favorites from localStorage:', serializedState);
     if (serializedState) {
       const parsedData = JSON.parse(serializedState);
       return {
@@ -22,7 +21,6 @@ const loadFavorites = () => {
 const saveFavorites = (state: any) => {
   try {
     const favoritesToSave = state.favorites.list;
-    console.log('Saving favorites to localStorage:', favoritesToSave);
     localStorage.setItem('pokemonFavorites', JSON.stringify(favoritesToSave));
   } catch (err) {
     console.error('Error saving favorites:', err);

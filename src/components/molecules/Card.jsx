@@ -9,7 +9,6 @@ export default function Card({img, name, number}) {
   const handleSelectPokemon=()=>{
     setSelect(!select);
     navigate(`/pokemon/${number}`);
-    console.log("Pokemon seleccionado:", number);
   }
   return (
     <div className="card" onClick={handleSelectPokemon}>
