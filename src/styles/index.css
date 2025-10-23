@@ -683,7 +683,7 @@ button:disabled {
 
 @media (min-width: 1440px) {
   .pokemon-list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     padding: 24px;
     margin-bottom: 10px;
